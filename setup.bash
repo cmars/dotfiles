@@ -12,8 +12,13 @@ function install_packages {
 	fi
 }
 
+# Update packages unless this is CI
+if [ -z "$TRAVIS_BUILD_ID" ]; then
+	sudo apt-get update
+fi
+
 # Install bare minimum packages
-sudo sh -c 'apt-get update && apt-get -y install --no-install-recommends git stow tmux vim'
+sudo apt-get -y install --no-install-recommends git stow tmux vim
 
 # If this was run from a downloaded script, provision it
 if [ ! -d "$HOME/dotfiles" ]; then
