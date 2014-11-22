@@ -8,6 +8,21 @@ master my life.
 My dotfiles, without me, are useless. Without my dotfiles, on a remote
 instance, I am useless. I must provision and source my dotfiles true.
 
+# Install
+
+## Check out & run setup with git
+
+1. Clone this repo as $HOME/dotfiles
+2. `$HOME/dotfiles/setup.bash`
+
+## Bootstrap it with curl
+
+```
+$ curl -L -O https://goo.gl/jOwuGK
+# TODO: check sha256 or gpg signature here...
+$ bash jOwuGK
+```
+
 ---
 
 Copyright (c) 2014 Casey Marshall <github@cmarstech.com>.
