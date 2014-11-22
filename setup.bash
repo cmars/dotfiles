@@ -1,7 +1,19 @@
 #!/bin/bash -ex
 
+DIST_ID=$(lsb_release -s -i || true)
+CODENAME=$(lsb_release -s -c || true)
+
+function install_packages {
+	if [[ "$DIST_ID" = "Ubuntu" && -n "$CODENAME" ]]; then
+		package_files=$HOME/dotfiles/ubuntu/$CODENAME/*
+		if [ -n "$package_files" ]; then
+			sudo apt-get install $(grep ^[^\#] $package_files | xargs)
+		fi
+	fi
+}
+
 # Install bare minimum packages
-sudo sh -c 'apt-get update && apt-get -y install git stow tmux vim-nox'
+sudo sh -c 'apt-get update && apt-get -y install git stow tmux vim'
 
 # If this was run from a downloaded script, provision it
 if [ ! -d "$HOME/dotfiles" ]; then
@@ -22,6 +34,9 @@ stow home
 
 # Complete vundle install
 vim +PluginInstall +qall
+
+# Install more packages
+install_packages
 
 # TODO: go get/install commands & other stuff
 

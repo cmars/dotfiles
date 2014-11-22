@@ -1,0 +1,6 @@
+fail2ban
+gnupg2
+logwatch
+ssh-import-id
+ufw
+unattended-upgrades
