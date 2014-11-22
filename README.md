@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/cmars/dotfiles.svg)](https://travis-ci.org/cmars/dotfiles)
+
 # dotfiles
 
 These are my dotfiles. There are many like them, but these dotfiles are mine.
