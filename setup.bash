@@ -44,5 +44,3 @@ $HOME/bin/goinstallpkg
 # woohoo
 echo "customization complete"
 
-# launch into it
-exec bash -l -c tmux
