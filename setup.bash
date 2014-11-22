@@ -38,7 +38,8 @@ vim +PluginInstall +qall
 # Install more packages
 install_packages
 
-# TODO: go get/install commands & other stuff
+# Build and install some useful Go binaries
+$HOME/bin/goinstallpkg
 
 # woohoo
 echo "customization complete"
