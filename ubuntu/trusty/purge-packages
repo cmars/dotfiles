@@ -1,0 +1,15 @@
+# Basic
+whoopsie
+libwhoopsie0
+
+# Unwanted
+oneconf
+oneconf-common
+ubuntu-sso-client
+
+# Desktop
+abiword
+abiword-common
+gnumeric
+gnumeric-common
+gnumeric-doc
