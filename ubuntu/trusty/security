@@ -1,6 +1,7 @@
 fail2ban
 gnupg2
 logwatch
+pinentry-curses
 ssh-import-id
 ufw
 unattended-upgrades
