@@ -3,5 +3,8 @@
 # terms of the Do What The Fuck You Want To Public License, Version 2,
 # as published by Sam Hocevar. See the COPYING file for more details.
 
-export DEBEMAIL="cmars@cmarstech.com"
-export DEBFULLNAME="Casey Marshall"
+# It's probably me.
+if [ "$USER" = "cmars" ]; then
+	export DEBEMAIL="cmars@cmarstech.com"
+	export DEBFULLNAME="Casey Marshall"
+fi
