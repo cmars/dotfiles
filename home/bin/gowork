@@ -1,0 +1,63 @@
+#!/usr/bin/rc
+#
+# Copyright © 2014 Casey Marshall <github@cmarstech.com>
+# This work is free. You can redistribute it and/or modify it under the
+# terms of the Do What The Fuck You Want To Public License, Version 2,
+# as published by Sam Hocevar. See the COPYING file for more details.
+#
+# gowork launches tmux with an environment suited to the particular developer
+# hat I'm wearing.
+
+WORKSPACE=$1
+PROJECT=$2
+
+if (test -z $1) {
+	echo "Usage: $0 <workspace> [<project>]"
+	exit 1
+}
+
+session_digest=`{md5sum <{echo $WORKSPACE-$PROJECT}}
+SESSION=$USER-$session_digest(1)
+echo $SESSION
+
+GOPATH=`{ls -d $HOME/$WORKSPACE/gocode}
+if (test ! -d $GOPATH) {
+	echo "Workspace $WORKSPACE not found"
+	exit 1
+}
+
+if (~ $1 cmarstech) {
+	DEBEMAIL=cmars@cmarstech.com
+	DEBFULLNAME='Casey Marshall'
+}
+if (~ $1 canonical) {
+	DEBEMAIL=casey.marshall@canonical.com
+	DEBFULLNAME='Casey Marshall'
+}
+
+cd $GOPATH/src
+
+tmux update-environment
+
+if (test -n $PROJECT) {
+	PROJECTPATH=`{ls -d $GOPATH/src/**/$PROJECT $GOPATH/src/**$PROJECT}
+	if (test ! -d $PROJECTPATH) {
+		echo "Project $PROJECT not found"
+		exit 1
+	}
+	cd $PROJECTPATH
+	if (tmux -2 new-session -d -s $SESSION) {
+		tmux set-environment -t $SESSION GOPATH $GOPATH
+		tmux send-keys 'vim' C-m
+		tmux send-keys '\n'
+		tmux new-window -t $SESSION:1 -n 'shell'
+		tmux select-window -t $SESSION:0
+	}
+}
+if (test -z $PROJECT) {
+	tmux -2 new-session -d -s $SESSION
+	tmux set-environment -t $SESSION GOPATH $GOPATH
+}
+
+tmux attach -t $SESSION
+
