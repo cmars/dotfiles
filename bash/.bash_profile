@@ -15,7 +15,7 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 if [ -d "$HOME/.bash_profile.d" ]; then
-  for i in "$HOME/.bash_profile.d/*.bash"; do
+  for i in $HOME/.bash_profile.d/*.bash; do
     if [ -r $i ]; then
       . $i
     fi
