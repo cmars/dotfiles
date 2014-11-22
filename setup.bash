@@ -7,7 +7,7 @@ function install_packages {
 	if [[ "$DIST_ID" = "Ubuntu" && -n "$CODENAME" ]]; then
 		package_files=$HOME/dotfiles/ubuntu/$CODENAME/*
 		if [ -n "$package_files" ]; then
-			sudo apt-get install $(grep ^[^\#] $package_files | xargs)
+			sudo apt-get -y install $(grep -h ^[^\#] $package_files | xargs)
 		fi
 	fi
 }

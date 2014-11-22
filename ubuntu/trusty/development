@@ -1,9 +1,9 @@
 bikeshed
 build-essential
 bzr
-debhelpers
 devscripts
 git
 golang-go
 mercurial
+quilt
 rc
