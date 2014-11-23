@@ -1,9 +1,9 @@
 #!/bin/bash -ex
 
-DIST_ID=$(bash -c 'lsb_release -s -i | tr [A-Z][a-z]' || true)
-CODENAME=$(lsb_release -s -c || true)
-
 function install_packages {
+	DIST_ID=$(bash -c 'lsb_release -s -i | tr [A-Z][a-z]' || true)
+	CODENAME=$(lsb_release -s -c || true)
+
 	if [[ -n "$DIST_ID" && -n "$CODENAME" ]]; then
 		package_files=$HOME/dotfiles/$DIST_ID/$CODENAME/*
 		if [ -n "$package_files" ]; then
@@ -24,7 +24,7 @@ if [ -z "$TRAVIS_BUILD_ID" ]; then
 fi
 
 # Install bare minimum packages
-sudo apt-get -y install --no-install-recommends git stow tmux vim
+sudo apt-get -y install --no-install-recommends git stow tmux vim lsb-release
 
 # If this was run from a downloaded script, provision it
 if [ ! -d "$HOME/dotfiles" ]; then
