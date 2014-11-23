@@ -1,28 +1,13 @@
 #!/bin/bash -ex
 
-TMP_GOPATH=$(mktemp -d)
-
-function cleanup {
-  rm -rf "$TMP_GOPATH"
-}
-trap cleanup EXIT
-
-export GOPATH=$TMP_GOPATH
-
-function goinstall {
-	PKG=$1
-	go get $PKG
-	go build -o $HOME/bin/$(basename $PKG) $PKG
-}
-
 if [ -n "$1" ]; then
-	goinstall $1
+	go get -u $1
 	exit $?
 fi
 
 for i in $(grep ^[^\#] $HOME/dotfiles/goinstall/packages)
 do
-	goinstall $i
+	go get -u $i
 done
 unset i
 
