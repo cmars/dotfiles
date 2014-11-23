@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 function install_packages {
-	DIST_ID=$(bash -c 'lsb_release -s -i | tr [A-Z][a-z]' || true)
+	DIST_ID=$(bash -c 'lsb_release -s -i | tr [A-Z] [a-z]' || true)
 	CODENAME=$(lsb_release -s -c || true)
 
 	if [[ -n "$DIST_ID" && -n "$CODENAME" ]]; then
