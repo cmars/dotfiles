@@ -1,4 +1,4 @@
-#!/usr/bin/rc
+#!/bin/bash
 #
 # Copyright © 2014 Casey Marshall <github@cmarstech.com>
 # This work is free. You can redistribute it and/or modify it under the
@@ -8,56 +8,62 @@
 # gowork launches tmux with an environment suited to the particular developer
 # hat I'm wearing.
 
-WORKSPACE=$1
-PROJECT=$2
+WORKSPACE="$1"
+PROJECT="$2"
 
-if (test -z $1) {
+if [ -z "${WORKSPACE}" ]; then
 	echo "Usage: $0 <workspace> [<project>]"
 	exit 1
-}
+fi
 
-session_digest=`{md5sum <{echo $WORKSPACE-$PROJECT}}
-SESSION=$USER-$session_digest(1)
-echo $SESSION
+session_digest=( $(echo ${WORKSPACE}-${PROJECT} | md5sum) )
+SESSION=${USER}-${session_digest[0]}
+echo ${SESSION}
 
-GOPATH=`{ls -d $HOME/$WORKSPACE/gocode}
-if (test ! -d $GOPATH) {
-	echo "Workspace $WORKSPACE not found"
+GOPATH=${HOME}/${WORKSPACE}/gocode
+if [ ! -d "${GOPATH}" ]; then
+	echo "${GOPATH} not found"
 	exit 1
-}
+fi
 
-if (~ $1 cmarstech) {
-	DEBEMAIL=cmars@cmarstech.com
-	DEBFULLNAME='Casey Marshall'
-}
-if (~ $1 canonical) {
-	DEBEMAIL=casey.marshall@canonical.com
-	DEBFULLNAME='Casey Marshall'
-}
+case "${WORKSPACE}" in
+	cmarstech)
+		DEBEMAIL=cmars@cmarstech.com
+		DEBFULLNAME='Casey Marshall'
+		;;
+	canonical)
+		DEBEMAIL=casey.marshall@canonical.com
+		DEBFULLNAME='Casey Marshall'
+		;;
+esac
 
-cd $GOPATH/src
+cd ${GOPATH}/src
 
 tmux update-environment
 
-if (test -n $PROJECT) {
-	PROJECTPATH=`{ls -d $GOPATH/src/**/$PROJECT $GOPATH/src/**$PROJECT}
-	if (test ! -d $PROJECTPATH) {
-		echo "Project $PROJECT not found"
+if [ -n "${PROJECT}" ]; then
+	# Choose the shortest matching path
+	PROJECTPATH=$( \
+		for p in $(find ${GOPATH} -path "${GOPATH}/src/*${PROJECT}"); do \
+			echo $(echo $p | wc -c) $p; \
+		done | sort -n -k1 | awk '{print $2}' | head -1 )
+
+	if [ ! -d "${PROJECTPATH}" ]; then
+		echo "Project ${PROJECT} not found"
 		exit 1
-	}
-	cd $PROJECTPATH
-	if (tmux -2 new-session -d -s $SESSION) {
-		tmux set-environment -t $SESSION GOPATH $GOPATH
+	fi
+	cd ${PROJECTPATH}
+	if tmux -2 new-session -d -s ${SESSION}; then
+		tmux set-environment -t ${SESSION} GOPATH ${GOPATH}
 		tmux send-keys 'vim' C-m
 		tmux send-keys '\n'
-		tmux new-window -t $SESSION:1 -n 'shell'
-		tmux select-window -t $SESSION:0
-	}
-}
-if (test -z $PROJECT) {
-	tmux -2 new-session -d -s $SESSION
-	tmux set-environment -t $SESSION GOPATH $GOPATH
-}
+		tmux new-window -t ${SESSION}:1 -n 'shell'
+		tmux select-window -t ${SESSION}:0
+	fi
+else 
+	if tmux -2 new-session -d -s ${SESSION}; then
+		tmux set-environment -t ${SESSION} GOPATH ${GOPATH}
+	fi
+fi
 
-tmux attach -t $SESSION
-
+tmux attach -t ${SESSION}
