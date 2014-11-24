@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 #
 # Copyright © 2014 Casey Marshall <github@cmarstech.com>
 # This work is free. You can redistribute it and/or modify it under the
@@ -20,49 +20,47 @@ session_digest=( $(echo ${WORKSPACE}-${PROJECT} | md5sum) )
 SESSION=${USER}-${session_digest[0]}
 echo ${SESSION}
 
-GOPATH=${HOME}/${WORKSPACE}/gocode
+export GOPATH=${HOME}/${WORKSPACE}/gocode
 if [ ! -d "${GOPATH}" ]; then
 	echo "${GOPATH} not found"
 	exit 1
 fi
 
-case "${WORKSPACE}" in
-	cmarstech)
-		DEBEMAIL=cmars@cmarstech.com
-		DEBFULLNAME='Casey Marshall'
-		;;
-	canonical)
-		DEBEMAIL=casey.marshall@canonical.com
-		DEBFULLNAME='Casey Marshall'
-		;;
-esac
-
 cd ${GOPATH}/src
 
-tmux update-environment
-
+PROJECTPATH=
 if [ -n "${PROJECT}" ]; then
 	# Choose the shortest matching path
 	PROJECTPATH=$( \
-		for p in $(find ${GOPATH} -path "${GOPATH}/src/*${PROJECT}"); do \
+		for p in $(find ${GOPATH} -type d -path "${GOPATH}/src/*${PROJECT}"); do \
 			echo $(echo $p | wc -c) $p; \
 		done | sort -n -k1 | awk '{print $2}' | head -1 )
 
+	cd ${PROJECTPATH}
 	if [ ! -d "${PROJECTPATH}" ]; then
 		echo "Project ${PROJECT} not found"
 		exit 1
 	fi
-	cd ${PROJECTPATH}
-	if tmux -2 new-session -d -s ${SESSION}; then
-		tmux set-environment -t ${SESSION} GOPATH ${GOPATH}
+fi
+
+case "${WORKSPACE}" in
+	cmarstech)
+		export DEBEMAIL=cmars@cmarstech.com
+		export DEBFULLNAME='Casey Marshall'
+		;;
+	canonical)
+		export DEBEMAIL=casey.marshall@canonical.com
+		export DEBFULLNAME='Casey Marshall'
+		;;
+esac
+
+if tmux -2 new-session -d -s ${SESSION}; then
+	tmux set-option -t ${SESSION} update-environment "GOPATH DEBEMAIL DEBFULLNAME"
+	if [ -n "${PROJECTPATH}" ]; then
 		tmux send-keys 'vim' C-m
 		tmux send-keys '\n'
 		tmux new-window -t ${SESSION}:1 -n 'shell'
 		tmux select-window -t ${SESSION}:0
-	fi
-else 
-	if tmux -2 new-session -d -s ${SESSION}; then
-		tmux set-environment -t ${SESSION} GOPATH ${GOPATH}
 	fi
 fi
 
