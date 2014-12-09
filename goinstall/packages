@@ -3,3 +3,4 @@ launchpad.net/godeps
 github.com/cloudflare/cfssl
 code.google.com/p/rog-go/exp/cmd/godef
 github.com/cmars/basen/cmd/basen
+github.com/juju/gocharm/cmd/gocharm
