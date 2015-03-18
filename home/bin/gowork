@@ -30,17 +30,23 @@ cd ${GOPATH}/src
 
 PROJECTPATH=
 if [ -n "${PROJECT}" ]; then
-	# Choose the shortest matching path
-	PROJECTPATH=$( \
-		for p in $(find ${GOPATH} -type d -path "${GOPATH}/src/*${PROJECT}"); do \
-			echo $(echo $p | wc -c) $p; \
-		done | sort -n -k1 | awk '{print $2}' | head -1 )
+	if [ -d "${GOPATH}/src/*${PROJECT}" ]; then
+		# First, check for an exact match
+		PROJECTPATH="${GOPATH}/src/*${PROJECT}"
+	else
+		# Choose the shortest matching path
+		PROJECTPATH=$( \
+			for p in $(find ${GOPATH} -type d -path "${GOPATH}/src/*${PROJECT}"); do \
+				echo $(echo $p | wc -c) $p; \
+			done | sort -n -k1 | awk '{print $2}' | head -1 )
+	fi
 
-	cd ${PROJECTPATH}
 	if [ ! -d "${PROJECTPATH}" ]; then
 		echo "Project ${PROJECT} not found"
 		exit 1
 	fi
+
+	cd ${PROJECTPATH}
 fi
 
 case "${WORKSPACE}" in
