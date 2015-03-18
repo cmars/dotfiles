@@ -44,4 +44,4 @@ $ bash setup.bash
 
 ---
 
-Copyright (c) 2014 Casey Marshall.
+Copyright 2014 Casey Marshall.
