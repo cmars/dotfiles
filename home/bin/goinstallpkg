@@ -1,5 +1,10 @@
 #!/bin/bash -ex
 
+TMP_GOPATH=$(mktemp -d)
+trap "rm -rf $TMP_GOPATH" EXIT
+
+export GOPATH=$TMP_GOPATH
+
 if [ -n "$1" ]; then
 	go get -u $1
 	exit $?
