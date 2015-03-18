@@ -13,12 +13,17 @@ function install_packages {
 }
 
 function install_gvm {
+
 	if [ ! -f "$HOME/.gvm/scripts/gvm" ]; then
 		bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 	fi
-	. $HOME/.gvm/scripts/gvm
-	gvm install release
-	gvm use release
+	if [ -n "$_GVM_LATEST" ]; then
+		. $HOME/.gvm/scripts/gvm
+		gvm install go1.4
+		gvm use go1.4
+	else
+		echo "_GVM_LATEST not set. Don't know what to 'gvm install'."
+	fi
 }
 
 # Update packages unless this is CI
@@ -45,6 +50,9 @@ stow bash
 stow vim
 stow tmux
 stow home
+
+# Choose gvm go release to install.
+. $HOME/.bash_profile.d/500-gvm-latest.bash
 
 # Complete vundle install
 vim +PluginInstall +qall
