@@ -12,17 +12,10 @@ function install_packages {
 	fi
 }
 
-function install_gvm {
-
-	if [ ! -f "$HOME/.gvm/scripts/gvm" ]; then
-		bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-	fi
-	if [ -n "$_GVM_LATEST" ]; then
-		. $HOME/.gvm/scripts/gvm
-		gvm install go1.4
-		gvm use go1.4
-	else
-		echo "_GVM_LATEST not set. Don't know what to 'gvm install'."
+function install_gobrew {
+	if [ ! -d "$HOME/.gobrew" ]; then
+		git clone git://github.com/cryptojuice/gobrew.git $HOME/.gobrew
+		(cd $HOME/.gobrew && git checkout ed893d71d9c26c472a8a59035dc99f7448b55206)
 	fi
 }
 
@@ -51,9 +44,6 @@ stow vim
 stow tmux
 stow home
 
-# Choose gvm go release to install.
-. $HOME/.bash_profile.d/500-gvm-latest.bash
-
 # Complete vundle install
 vim +PluginInstall +qall
 
@@ -61,7 +51,7 @@ vim +PluginInstall +qall
 install_packages
 
 # Install gvm
-install_gvm
+install_gobrew
 
 # Build and install some useful Go binaries
 if hash go 2>/dev/null; then

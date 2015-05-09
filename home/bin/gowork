@@ -16,23 +16,23 @@ if [ -z "${WORKSPACE}" ]; then
 	exit 1
 fi
 
-session_digest=( $(echo ${WORKSPACE}-${PROJECT} | md5sum) )
-SESSION=${USER}-${session_digest[0]}
+SESSION=${USER}-${WORKSPACE}-${PROJECT}
 echo ${SESSION}
 
-export GOPATH=${HOME}/${WORKSPACE}/gocode
-if [ ! -d "${GOPATH}" ]; then
-	echo "${GOPATH} not found"
-	exit 1
+cd ${HOME}
+if [ ! -d "${WORKSPACE}/gopath/src" ]; then
+	mkdir -p "${WORKSPACE}/gopath/src"
 fi
+
+export GOPATH=$HOME/${WORKSPACE}/gopath
 
 cd ${GOPATH}/src
 
 PROJECTPATH=
 if [ -n "${PROJECT}" ]; then
-	if [ -d "${GOPATH}/src/*${PROJECT}" ]; then
+	if [ -d "${GOPATH}/src/${PROJECT}" ]; then
 		# First, check for an exact match
-		PROJECTPATH="${GOPATH}/src/*${PROJECT}"
+		PROJECTPATH="${GOPATH}/src/${PROJECT}"
 	else
 		# Choose the shortest matching path
 		PROJECTPATH=$( \
