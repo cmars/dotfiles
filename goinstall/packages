@@ -3,3 +3,4 @@ launchpad.net/godeps
 code.google.com/p/rog-go/exp/cmd/godef
 github.com/cmars/basen/cmd/basen
 gopkg.in/petname.v1/cmd/petname
+github.com/mitchellh/gox

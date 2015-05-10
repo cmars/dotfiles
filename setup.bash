@@ -17,6 +17,8 @@ function install_gobrew {
 		git clone git://github.com/cryptojuice/gobrew.git $HOME/.gobrew
 		(cd $HOME/.gobrew && git checkout ed893d71d9c26c472a8a59035dc99f7448b55206)
 	fi
+	. $HOME/dotfiles/bash/.bash_profile.d/500-gobrew.bash
+	gobrew install 1.4.2 || true
 }
 
 # Update packages unless this is CI
