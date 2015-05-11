@@ -6,5 +6,5 @@
 if [ -z "$GOPATH" ]; then
 	export GOPATH=$HOME/gocode
 	mkdir -p $GOPATH/src
-	export PATH=$GOPATH/bin
+	export PATH="$GOPATH/bin:$PATH"
 fi
