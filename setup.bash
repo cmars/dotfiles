@@ -1,33 +1,13 @@
 #!/bin/bash -ex
 
-function install_packages {
-	DIST_ID=$(bash -c 'lsb_release -s -i | tr [A-Z] [a-z]' || true)
-	CODENAME=$(lsb_release -s -c || true)
-
-	if [[ -n "$DIST_ID" && -n "$CODENAME" ]]; then
-		package_files=$HOME/dotfiles/$DIST_ID/$CODENAME/*
-		if [ -n "$package_files" ]; then
-			sudo apt-get -y install --no-install-recommends $(grep -h ^[^\#] $package_files | xargs)
-		fi
-	fi
-}
-
 function install_gobrew {
 	if [ ! -d "$HOME/.gobrew" ]; then
 		git clone git://github.com/cryptojuice/gobrew.git $HOME/.gobrew
 		(cd $HOME/.gobrew && git checkout ed893d71d9c26c472a8a59035dc99f7448b55206)
 	fi
 	. $HOME/dotfiles/bash/.bash_profile.d/500-gobrew.bash
-	gobrew install 1.4.2 || true
+	gobrew install 1.4.2 && gobrew use 1.4.2 || true
 }
-
-# Update packages unless this is CI
-if [ -z "$TRAVIS_BUILD_ID" ]; then
-	sudo apt-get update
-fi
-
-# Install bare minimum packages
-sudo apt-get -y install --no-install-recommends git stow tmux vim lsb-release
 
 # If this was run from a downloaded script, provision it
 if [ ! -d "$HOME/dotfiles" ]; then
@@ -48,9 +28,6 @@ stow home
 
 # Complete vundle install
 vim +PluginInstall +qall
-
-# Install more packages
-install_packages
 
 # Install gvm
 install_gobrew
