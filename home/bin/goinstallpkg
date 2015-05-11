@@ -1,9 +1,6 @@
 #!/bin/bash -ex
 
-TMP_GOPATH=$(mktemp -d)
-trap "rm -rf $TMP_GOPATH" EXIT
-
-export GOPATH=$TMP_GOPATH
+. $HOME/.bash_profile.d/501-gopath-default.bash
 
 if [ -n "$1" ]; then
 	go get -u $1
