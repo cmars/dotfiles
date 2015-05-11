@@ -3,7 +3,8 @@
 # terms of the Do What The Fuck You Want To Public License, Version 2,
 # as published by Sam Hocevar. See the COPYING file for more details.
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    export PATH="$HOME/bin:$PATH"
+if [ -z "$GOPATH" ]; then
+	export GOPATH=$HOME/gocode
+	mkdir -p $GOPATH/src
+	export PATH=$GOPATH/bin
 fi
