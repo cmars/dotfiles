@@ -35,6 +35,9 @@ install_gobrew
 # Build and install some useful Go binaries
 if hash go 2>/dev/null; then
 	$HOME/bin/goinstallpkg
+
+	# Install Go binaries supporting vim plugins
+	vim +GoInstallBinaries +qall
 else
 	echo "golang not installed"
 fi
