@@ -4,7 +4,7 @@
 # as published by Sam Hocevar. See the COPYING file for more details.
 
 if [ -z "$GOPATH" ]; then
-	export GOPATH=$HOME/gocode
+	export GOPATH=$HOME/gopath
 	mkdir -p $GOPATH/src
 	export PATH="$GOPATH/bin:$PATH"
 fi
