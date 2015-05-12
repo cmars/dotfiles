@@ -25,6 +25,7 @@ stow bash
 stow vim
 stow tmux
 stow home
+stow urxvt
 
 # Complete vundle install
 vim +PluginInstall +qall
