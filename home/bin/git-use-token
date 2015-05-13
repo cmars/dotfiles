@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+# TODO(cmars): clean up prior url.*.insteadOf entries
+
+TOKEN=$1
+
+if [ -z "$TOKEN" ]; then
+	echo "Usage: $0 <github token>"
+	exit 1
+fi
+
+touch $HOME/.gitconfig
+trap "chmod 600 $HOME/.gitconfig" EXIT
+
+git config --global url."https://$TOKEN:x-oauth-basic@github.com".insteadOf https://github.com
+git config --global url."https://$TOKEN:x-oauth-basic@github.com/".insteadOf git://github.com:
+
