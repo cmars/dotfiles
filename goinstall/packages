@@ -4,3 +4,6 @@ code.google.com/p/rog-go/exp/cmd/godef
 github.com/cmars/basen/cmd/basen
 gopkg.in/petname.v1/cmd/petname
 github.com/mitchellh/gox
+github.com/rogpeppe/http
+github.com/fzipp/pythia
+github.com/axw/gocov/gocov
