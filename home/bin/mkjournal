@@ -5,5 +5,11 @@
 # terms of the Do What The Fuck You Want To Public License, Version 2,
 # as published by Sam Hocevar. See the COPYING file for more details.
 
+name=`date +%y%m%d`.md
+topic="$1"
+if [ -n "$topic" ]; then
+	name="${topic}-${name}"
+fi
+
 mkdir -p $HOME/Documents/Journal
-vim $HOME/Documents/Journal/`date +%y%m%d`.md
+vim $HOME/Documents/Journal/${name}
