@@ -70,3 +70,5 @@ Bundle 'dgryski/vim-godef'
 
 filetype plugin on     " required!
 
+let g:godef_split=0
+
