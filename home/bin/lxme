@@ -44,16 +44,16 @@ case $subcommand in
 		;;
 	root)
 		if [ "$#" == "0" ]; then
-			lxc exec $container -- script -qfc /bin/bash -li
+			lxc exec $container -- script -qfc "/bin/bash -li"
 		else
-			lxc exec $container -- script -qfc $*
+			lxc exec $container -- script -qfc "$*"
 		fi
 		;;
 	user)
 		if [ "$#" == "0" ]; then
-			lxc exec $container -- sudo su - ubuntu -c "script -qfc /bin/bash -li"
+			lxc exec $container -- sudo su - ubuntu -c "script -qfc \"/bin/bash -li\""
 		else
-			lxc exec $container -- sudo su - ubuntu -c "script -qfc $*"
+			lxc exec $container -- sudo su - ubuntu -c "script -qfc \"$*\""
 		fi
 		;;
 esac
