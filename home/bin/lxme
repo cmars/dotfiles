@@ -1,0 +1,61 @@
+#!/bin/bash -e
+
+function usage(){
+	echo "Usage: $0 <subcommand> <container name>"
+	exit 1
+}
+
+function makenew(){
+	lxc launch lxc-org:ubuntu/trusty/amd64 $container
+	tmpinit=$(mktemp)
+	trap "rm -rf $tmpinit" EXIT
+	cat >>$tmpinit <<EOF
+#!/bin/bash -e
+export DEBIAN_FRONTEND=noninteractive
+echo "%sudo	ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/ubuntu
+chmod 440 /etc/sudoers.d/ubuntu
+sed -i 's/^%sudo	ALL=\(ALL:ALL\) ALL$/%sudo	ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
+sleep 3		# TODO: wait for network here
+apt-get -y update && apt-get -f -y dist-upgrade
+apt-get -f -y install git
+sudo su - ubuntu -c 'git clone https://github.com/cmars/dotfiles.git'
+sudo su - ubuntu -c 'dotfiles/install-packages.bash'
+sudo su - ubuntu -c 'dotfiles/setup.bash'
+EOF
+	lxc file push --mode=0755 $tmpinit $container/$tmpinit
+	lxc exec $container -- script -qfc $tmpinit
+}
+
+subcommand=$1
+if [ -z "$subcommand" ]; then
+	usage
+fi
+shift
+
+container=$1
+if [ -z "$container" ]; then
+	usage
+fi
+shift
+
+case $subcommand in
+	new)
+		makenew $container
+		;;
+	root)
+		if [ "$#" == "0" ]; then
+			lxc exec $container -- script -qfc "/bin/bash -li"
+		else
+			lxc exec $container -- script -qfc "$*"
+		fi
+		;;
+	user)
+		if [ "$#" == "0" ]; then
+			lxc exec $container -- sudo su - ubuntu -c "script -qfc \"/bin/bash -li\""
+		else
+			lxc exec $container -- sudo su - ubuntu -c "script -qfc \"$*\""
+		fi
+		;;
+esac
+
+exit 0

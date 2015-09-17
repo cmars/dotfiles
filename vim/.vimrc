@@ -67,6 +67,7 @@ Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'L9'
 Bundle 'fatih/vim-go'
 Bundle 'dgryski/vim-godef'
+Bundle 'garyburd/go-explorer'
 
 filetype plugin on     " required!
 

@@ -1,0 +1,5 @@
+#!/bin/bash
+cf=$(mktemp)
+trap 'rm -f $cf' 0
+go test -coverprofile $cf $*
+go tool cover -html $cf
