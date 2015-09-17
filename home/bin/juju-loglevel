@@ -1,0 +1,32 @@
+#!/bin/bash -e
+
+level=$1
+if [ -z "$level" ]; then
+	juju get-env logging-config
+	exit
+fi
+
+case $level in
+	CRITICAL)
+		;;
+	ERROR)
+		;;
+	WARN)
+		;;
+	WARNING)
+		;;
+	INFO)
+		;;
+	DEBUG)
+		;;
+	TRACE)
+		;;
+	*)
+		echo "Invalid log level $level."
+		echo "Try one of: CRITICAL ERROR WARN INFO DEBUG TRACE"
+		exit 1
+		;;
+esac
+
+juju set-env "logging-config=<root>=$level"
+
