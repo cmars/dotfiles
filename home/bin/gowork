@@ -25,6 +25,7 @@ if [ ! -d "${WORKSPACE}/gopath/src" ]; then
 fi
 
 export GOPATH=$HOME/${WORKSPACE}/gopath
+export PATH=$GOPATH/bin:$PATH
 
 cd ${GOPATH}/src
 
