@@ -1,0 +1,20 @@
+#!/bin/bash -xe
+
+deps=$1
+if [ ! -e "$deps" ]; then
+	echo "Usage: $0 <dependencies.tsv>"
+	exit 1
+fi
+
+while read -r pkg vcs commit ts; do
+	if [ "$vcs" = "git" ]; then
+		fetchpkg=$(echo $pkg | sed 's/^golang.org\/x/github.com\/golang/')
+		if [ ! -d "vendor/src/$pkg" ]; then
+			git remote add vendor/src/$pkg https://$fetchpkg.git
+			git fetch vendor/src/$pkg
+			git subtree add -P vendor/src/$pkg --squash https://$fetchpkg.git $commit
+			git remote remove vendor/src/$pkg
+		fi
+	fi
+done <$deps
+
