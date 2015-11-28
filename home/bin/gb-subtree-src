@@ -3,6 +3,7 @@
 PKG=$1
 if [ -z "$PKG" ]; then
 	echo "Usage: $0 <package>"
+	exit 1
 fi
 
 BRANCH=$2

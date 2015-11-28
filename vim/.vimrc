@@ -39,9 +39,7 @@ set ignorecase
 set smartcase
 
 " colors
-set t_Co=256
-syntax on
-colorscheme elflord
+syntax off
 
 " Vundle
 "
