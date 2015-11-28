@@ -7,7 +7,7 @@ else
 fi
 
 export PATH="$HOME/.gobrew/bin:$PATH"
-eval "$(gobrew init -)
+eval "$(gobrew init -)"
 
 latest=$(gobrew list | tail -1)
 if [ ! -d "$HOME/.gobrew/versions/$latest" ]; then
