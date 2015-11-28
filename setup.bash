@@ -1,9 +1,9 @@
 #!/bin/bash -ex
 
-# If git is not installed, try to install it.
-if [ ! -x "/usr/bin/git" ]; then
-	sudo apt-get install git
-fi
+for i in git stow; do
+	dpkg -i $i 2>/dev/null || sudo apt-get install $i
+done
+unset i
 
 # If this was run from a downloaded script, provision it.
 if [ ! -d "$HOME/dotfiles" ]; then
