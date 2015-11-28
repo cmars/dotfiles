@@ -1,6 +1,11 @@
 #!/bin/bash -ex
 
-# If this was run from a downloaded script, provision it
+# If git is not installed, try to install it.
+if [ ! -x "/usr/bin/git" ]; then
+	sudo apt-get install git
+fi
+
+# If this was run from a downloaded script, provision it.
 if [ ! -d "$HOME/dotfiles" ]; then
 	cd $HOME
 	git clone https://github.com/cmars/dotfiles.git
