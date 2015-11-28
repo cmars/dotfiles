@@ -3,5 +3,10 @@
 # terms of the Do What The Fuck You Want To Public License, Version 2,
 # as published by Sam Hocevar. See the COPYING file for more details.
 
-export PATH="$HOME/.gobrew/bin:$PATH"
-eval "$(gobrew init -)"
+if [ -z "$GOPATH" ]; then
+	export GOPATH=$HOME/gopath
+	mkdir -p $GOPATH/src
+fi
+
+export PATH="$GOPATH/bin:$PATH"
+
