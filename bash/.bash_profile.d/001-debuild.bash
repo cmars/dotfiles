@@ -5,7 +5,7 @@
 
 # It's probably me.
 if [ "$USER" = "cmars" ]; then
-	export DEBEMAIL="cmars@cmarstech.com"
+	export DEBEMAIL="casey.marshall@canonical.com"
 	export DEBFULLNAME="Casey Marshall"
-	export DEBSIGN_KEYID=0x879CF8AA8DDA301A
+	export DEBSIGN_KEYID=0xEEFC0782
 fi
