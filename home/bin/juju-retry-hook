@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+ENTITY=$1
+if [ -z "$ENTITY" ]; then
+	echo "Usage: $(basename $0) <unit or service name>"
+	exit 1
+fi
+
+if [[ "${ENTITY}" =~ \/[0-9] ]]; then
+	exec juju resolved --retry ${ENTITY}
+fi
+
+UNITS=$(juju status --format json | jq -r '.services["'${ENTITY}'"]["units"] | keys | .[]')
+for unit in ${UNITS}; do
+	juju resolved --retry ${unit} || true
+done
+
