@@ -1,7 +1,0 @@
-# Basic stuff that tends to go missing in minimal cloud images.
-bzip2
-duplicity
-rsync
-unzip
-util-linux
-zip

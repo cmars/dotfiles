@@ -22,3 +22,4 @@ if [ -d "$HOME/.bash_profile.d" ]; then
   done
   unset i
 fi
+export PATH=/home/cmars/tools/bin:$PATH

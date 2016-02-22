@@ -1,6 +1,0 @@
-Each package path in 'packages' is built from source and installed into
-$HOME/bin. Assumption is that the path contains a `package main` and builds a
-binary.
-
-TODO: migrate to godeps format to freeze revision if/when we get bitten by a
-broken trunk.

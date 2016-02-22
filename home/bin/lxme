@@ -6,7 +6,7 @@ function usage(){
 }
 
 function makenew(){
-	lxc launch lxc-org:ubuntu/trusty/amd64 $container
+	lxc launch ubuntu-trusty $container
 	tmpinit=$(mktemp)
 	trap "rm -rf $tmpinit" EXIT
 	cat >>$tmpinit <<EOF

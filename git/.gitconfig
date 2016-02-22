@@ -1,6 +1,3 @@
 [user]
-	email = cmars@cmarstech.com
+	email = github@cmars.tech
 	name = Casey Marshall
-
-[alias]
-	ll = !git log --no-pager --first-parent --reverse --pretty=\"tformat:%C(yellow)%h%Creset%<(30) %an %ad%n%w(79,8,8)%s%+b%n\" -10 --date=short
