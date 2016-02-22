@@ -3,7 +3,10 @@
 HERE=$(cd $(dirname "$0"); pwd)
 
 cd ${HOME}
-git clone https://github.com/cmars/tools.git
+if [ ! -d "tools" ]; then
+	git clone https://github.com/cmars/tools.git
+fi
+
 ${HOME}/tools/install.bash
 
 cd ${HERE}
