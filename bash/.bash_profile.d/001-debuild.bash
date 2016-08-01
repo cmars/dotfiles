@@ -4,7 +4,7 @@
 # as published by Sam Hocevar. See the COPYING file for more details.
 
 # It's probably me.
-if [ "$USER" = "cmars" ]; then
+if [ "$USER" = "c" ]; then
 	export DEBEMAIL="casey.marshall@canonical.com"
 	export DEBFULLNAME="Casey Marshall"
 	export DEBSIGN_KEYID=0xEEFC0782
