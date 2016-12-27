@@ -58,16 +58,16 @@ call vundle#rc()
 " let Vundle manage Vundle
 " required!
 Bundle 'gmarik/vundle'
-
-" Vundle bundles:
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'L9'
 Bundle 'fatih/vim-go'
 Bundle 'dgryski/vim-godef'
 Bundle 'garyburd/go-explorer'
+Plugin 'rust-lang/rust.vim'
+Plugin 'racer-rust/vim-racer'
 
-filetype plugin on     " required!
+filetype plugin on
 
 let g:godef_split=0
 
