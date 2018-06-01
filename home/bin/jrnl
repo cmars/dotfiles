@@ -1,1 +1,14 @@
-/home/c/Canonical/bin/jrnl
+#!/bin/bash
+
+journal_root=${HOME}/Documents/Journal
+
+topic=$1
+if [ -z "${topic}" ]; then
+	topic="default"
+fi
+
+set -eu
+
+entry_dir=${journal_root}/$(date '+%Y/%m/%d')
+mkdir -p ${entry_dir}
+exec vim ${entry_dir}/${topic}
