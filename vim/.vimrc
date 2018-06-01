@@ -38,9 +38,6 @@ set tabstop=4
 set ignorecase
 set smartcase
 
-" colors
-syntax off
-
 " Vundle
 "
 " Brief help
@@ -67,7 +64,13 @@ Bundle 'garyburd/go-explorer'
 Plugin 'rust-lang/rust.vim'
 Plugin 'racer-rust/vim-racer'
 
+" colors
+syntax on
+
+filetype on
+
 filetype plugin on
 
 let g:godef_split=0
 
+let g:rustfmt_autosave = 1
