@@ -59,8 +59,6 @@ Bundle 'fholgado/minibufexpl.vim'
 Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'L9'
 Bundle 'fatih/vim-go'
-Bundle 'dgryski/vim-godef'
-Bundle 'garyburd/go-explorer'
 Plugin 'rust-lang/rust.vim'
 Plugin 'racer-rust/vim-racer'
 
@@ -70,7 +68,5 @@ syntax on
 filetype on
 
 filetype plugin on
-
-let g:godef_split=0
 
 let g:rustfmt_autosave = 1
