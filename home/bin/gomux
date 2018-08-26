@@ -1,6 +1,6 @@
 #!/bin/bash
 
-prefix=${HOME}/go
+prefix=${HOME}/Projects/go
 
 project=$1
 if [ -z "${project}" ]; then
