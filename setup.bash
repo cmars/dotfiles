@@ -4,7 +4,7 @@ HERE=$(cd $(dirname "$0"); pwd)
 
 cd ${HERE}
 
-sudo apt-get install -y git stow vim
+sudo apt-get install -y git stow vim tmux
 
 # Initialize vundle submodules
 git submodule init
