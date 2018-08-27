@@ -58,9 +58,6 @@ Bundle 'gmarik/vundle'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'L9'
-Bundle 'fatih/vim-go'
-Plugin 'rust-lang/rust.vim'
-Plugin 'racer-rust/vim-racer'
 
 " colors
 syntax on
@@ -69,4 +66,3 @@ filetype on
 
 filetype plugin on
 
-let g:rustfmt_autosave = 1
