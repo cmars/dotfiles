@@ -1,0 +1,10 @@
+#!/bin/bash -e
+CONTAINER=$1
+if [ -z "${CONTAINER}" ]; then
+	echo "Usage: $(basename $0) <container>"
+	exit 1
+fi
+lxc config set ${CONTAINER} security.nesting true
+lxc config set ${CONTAINER} security.privileged true
+lxc stop ${CONTAINER} --force
+lxc start ${CONTAINER}

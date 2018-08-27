@@ -1,0 +1,13 @@
+#!/bin/bash
+
+model=${1:-controller}
+machine=${2:-0}
+
+read -d '' -r cmds <<'EOF'
+password=`sudo grep oldpassword /var/lib/juju/agents/machine-*/agent.conf  | cut -d' ' -f2`
+/usr/lib/juju/mongo*/bin/mongo 127.0.0.1:37017/juju --authenticationDatabase admin --ssl --sslAllowInvalidCertificates --username "admin" --password "$password"
+EOF
+
+juju ssh -m $model $machine "$cmds"
+
+

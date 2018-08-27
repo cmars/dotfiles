@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import base64
+import json
+import os
+import sys
+
+if __name__ == '__main__':
+    if sys.argv[1:]:
+        filename = sys.argv[1]
+    else:
+        filename = "%s/.go-cookies" % (os.environ["HOME"])
+    with open(filename, "r", encoding='utf8') as f:
+        cookies = json.load(f)
+        for cookie in cookies:
+            value_enc = cookie.get('Value')
+            if not value_enc:
+                continue
+            value = base64.b64decode(value_enc)
+            macaroons = json.loads(value.decode('utf8'))
+            for macaroon in macaroons:
+                if macaroon.get('signature'):
+                    macaroon['signature'] = 'scrubbed'
+                if macaroon.get('identifier'):
+                    macaroon['identifier'] = 'scrubbed'
+                for caveat in macaroon.get('caveats', []):
+                    if caveat.get('vid'):
+                        caveat['vid'] = 'scrubbed'
+                        if caveat.get('cid'):
+                            caveat['cid'] = 'scrubbed'
+            cookie['Value'] = macaroons
+    json.dump(cookies, sys.stdout, indent=4, sort_keys=True)

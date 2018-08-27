@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+containers=$(lxc list --format json | jq -r '.[].name')
+if [ -n "$containers" ]; then
+	lxc delete --force $containers
+fi
+
