@@ -9,3 +9,5 @@ if [ -d "$HOME/.bash_profile.d" ]; then
 	unset i
 fi
 
+
+export PATH="$HOME/.cargo/bin:$PATH"
