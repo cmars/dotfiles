@@ -55,12 +55,13 @@ call vundle#rc()
 " let Vundle manage Vundle
 " required!
 Bundle 'gmarik/vundle'
-Bundle 'fholgado/minibufexpl.vim'
 Bundle 'vim-scripts/The-NERD-tree'
-Bundle 'L9'
+Plugin 'unkiwii/vim-nerdtree-sync'
 Bundle 'fatih/vim-go'
 Plugin 'rust-lang/rust.vim'
 Plugin 'racer-rust/vim-racer'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " colors
 syntax on
@@ -70,3 +71,12 @@ filetype on
 filetype plugin on
 
 let g:rustfmt_autosave = 1
+let g:rustfmt_command = "rustup run nightly rustfmt"
+
+au BufRead,BufNewFile *.dl             set filetype=dl
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+let g:NERDTreeHighlightCursorline = 1
+let g:nerdtree_sync_cursorline = 1
