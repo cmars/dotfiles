@@ -14,6 +14,8 @@ export GOPATH=${prefix}/${project}
 mkdir -p ${GOPATH}
 cd ${GOPATH}
 
+export PATH=$GOPATH/bin:$PATH
+
 if [ -f ".gomux" ]; then
 	source .gomux
 fi

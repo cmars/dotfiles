@@ -1,4 +1,20 @@
 [user]
 	email = git@cmars.tech
 	name = Casey Marshall
-	signingkey = 412425DA78537AFE
+	signingkey = 6B787E5FB493FA4FD0095D106DEC2758ACD5A973
+[secrets]
+	providers = git secrets --aws-provider
+	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
+	patterns = (\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?
+	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
+	patterns = ([A-Za-z_]*(PASSWORD|(P|p)assword|SECRET|secret|Secret|TOKEN|token|Token|CREDENTIALS?|(C|c)redentials?|KEY|key|Key)\\s*(:|=))
+#[log]
+	#showSignature = true
+[commit]
+	gpgSign = true
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[color]
+	ui = auto
+[core]
+	quotepath = false
