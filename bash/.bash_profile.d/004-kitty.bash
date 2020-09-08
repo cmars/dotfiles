@@ -1,3 +1,1 @@
-if [ -x "/usr/bin/kitty" ]; then
-	export TERMINAL=kitty
-fi
+export TERM=xterm-256color

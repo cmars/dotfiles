@@ -18,8 +18,12 @@ set showcmd
 map <Leader>n :NERDTree<cr>
 
 " buffer magic
-map <Leader>h :bp<cr>
-map <Leader>l :bn<cr>
+map <Leader>[ :bp<cr>
+map <Leader>] :bn<cr>
+
+" splits
+map <Leader>- :split<cr>
+map <Leader><Bar> :vsplit<cr>
 
 " window magic
 noremap <C-Down> <C-W>j
@@ -67,9 +71,9 @@ Plugin 'joshdick/onedark.vim'
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
 " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-if (has("termguicolors"))
-  set termguicolors
-endif
+"if (has("termguicolors"))
+" set termguicolors
+"endif
 
 " colors
 syntax on
